@@ -54,9 +54,11 @@ func mmap(db *DB, sz int) error {
 		return err
 	}
 
-	// Advise the kernel that the mmap is accessed randomly.
-	if err := madvise(b, syscall.MADV_RANDOM); err != nil {
-		return fmt.Errorf("madvise: %s", err)
+	if db.UseMadvise {
+		// Advise the kernel that the mmap is accessed randomly.
+		if err := madvise(b, syscall.MADV_RANDOM); err != nil {
+			return fmt.Errorf("madvise: %s", err)
+		}
 	}
 
 	// Save the original byte slice and convert to a byte array pointer.

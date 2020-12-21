@@ -917,6 +917,8 @@ type Options struct {
 	// If initialMmapSize is smaller than the previous database size,
 	// it takes no effect.
 	InitialMmapSize int
+
+	UseMadvise bool
 }
 
 // DefaultOptions represent the options used if nil options are passed into Open().
@@ -924,6 +926,7 @@ type Options struct {
 var DefaultOptions = &Options{
 	Timeout:    0,
 	NoGrowSync: false,
+	UseMadvise: true,
 }
 
 // Stats represents statistics about the database.
