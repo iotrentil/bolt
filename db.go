@@ -94,6 +94,8 @@ type DB struct {
 	// of truncate() and fsync() when growing the data file.
 	AllocSize int
 
+    UseMadvise bool
+
 	path     string
 	file     *os.File
 	lockfile *os.File // windows only
@@ -156,6 +158,7 @@ func Open(path string, mode os.FileMode, options *Options) (*DB, error) {
 	}
 	db.NoGrowSync = options.NoGrowSync
 	db.MmapFlags = options.MmapFlags
+    db.UseMadvise = options.UseMadvise
 
 	// Set default values for later DB operations.
 	db.MaxBatchSize = DefaultMaxBatchSize
